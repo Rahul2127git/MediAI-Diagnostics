@@ -1,14 +1,39 @@
 import Link from "next/link";
+import Particles from "react-tsparticles";
+import { loadFull } from "tsparticles";
 
 export default function Home() {
+  const particlesInit = async (main) => {
+    await loadFull(main);
+  };
+
   return (
     <div className="container">
+      <Particles
+        id="tsparticles"
+        init={particlesInit}
+        options={{
+          background: { color: "transparent" },
+          particles: {
+            number: { value: 60 },
+            size: { value: 3 },
+            move: { enable: true, speed: 1 },
+            opacity: { value: 0.5 },
+            links: {
+              enable: true,
+              color: "#00c6ff",
+              distance: 150,
+            },
+          },
+        }}
+      />
+
       <div className="overlay">
         <h1>MediAI Diagnostics</h1>
         <p>AI-powered blood report analysis & health insights</p>
 
         <Link href="/upload">
-          <button>Start Analysis</button>
+          <button className="glow-btn">Start Analysis</button>
         </Link>
       </div>
 
@@ -19,7 +44,8 @@ export default function Home() {
           display: flex;
           justify-content: center;
           align-items: center;
-          animation: zoom 20s infinite alternate ease-in-out;
+          position: relative;
+          animation: zoom 20s infinite alternate;
         }
 
         @keyframes zoom {
@@ -28,26 +54,36 @@ export default function Home() {
         }
 
         .overlay {
+          position: absolute;
           backdrop-filter: blur(15px);
-          background: rgba(0,0,0,0.4);
+          background: rgba(0,0,0,0.5);
           padding: 50px;
           border-radius: 15px;
           text-align: center;
           color: white;
+          z-index: 2;
         }
 
-        button {
+        h1 {
+          font-size: 2.5rem;
+          text-shadow: 0 0 10px #00c6ff;
+        }
+
+        .glow-btn {
           margin-top: 20px;
           padding: 12px 25px;
           border: none;
           border-radius: 10px;
-          background: #00c6ff;
+          background: linear-gradient(45deg, #00c6ff, #0072ff);
+          color: white;
           cursor: pointer;
-          font-size: 16px;
+          box-shadow: 0 0 15px #00c6ff;
+          transition: 0.3s;
         }
 
-        button:hover {
-          background: #00aaff;
+        .glow-btn:hover {
+          box-shadow: 0 0 30px #00c6ff;
+          transform: scale(1.05);
         }
       `}</style>
     </div>
