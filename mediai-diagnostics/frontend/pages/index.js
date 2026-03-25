@@ -1,224 +1,119 @@
-import Link from "next/link";
+import { useState } from "react";
 
 export default function Home() {
+  const [file, setFile] = useState(null);
+
+  const handleUpload = async () => {
+    if (!file) return alert("Select a file");
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const res = await fetch(
+        "https://mediai-diagnostics-qpdf.onrender.com/analyze/",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      const data = await res.json();
+      alert(JSON.stringify(data, null, 2));
+    } catch {
+      alert("Backend error");
+    }
+  };
+
   return (
     <div className="container">
 
       {/* NAVBAR */}
-      <nav className="navbar">
+      <nav>
         <h2>MediAI</h2>
         <div>
-          <a href="#">Home</a>
+          <a href="#home">Home</a>
           <a href="#how">How it works</a>
-          <a href="/upload">File upload</a>
-          <a href="#">Dashboard</a>
-          <a href="#">About</a>
+          <a href="#upload">Upload</a>
+          <a href="#dashboard">Dashboard</a>
+          <a href="#about">About</a>
         </div>
-        <Link href="/upload">
-          <button className="primary">Try Now</button>
-        </Link>
       </nav>
 
-      {/* HERO SECTION */}
-      <section className="hero">
-        <div className="left">
-          <h1>Analyze Medical Reports Instantly</h1>
-          <p>
-            AI-powered blood report analysis. Upload your report and get
-            clear health insights in seconds.
-          </p>
+      {/* HERO */}
+      <section id="home" className="hero">
+        <h1>MediAI Diagnostics</h1>
+        <p>AI-powered blood report analysis</p>
 
-          <Link href="/upload">
-            <button className="primary big">Upload Report</button>
-          </Link>
+        <a href="#upload">
+          <button>Upload Report</button>
+        </a>
+      </section>
 
-          <div className="tags">
-            <span>⚡ Fast</span>
-            <span>🔒 Private</span>
-            <span>🧠 AI Powered</span>
-          </div>
-        </div>
+      {/* UPLOAD SECTION (MAIN FEATURE) */}
+      <section id="upload" className="upload">
+        <h2>Upload Health Report</h2>
 
-        <div className="right">
-          <img src="/bg.jpg" alt="AI" />
-        </div>
+        <input
+          type="file"
+          accept=".pdf,.csv,.xlsx,.xls,.png,.jpg,.jpeg"
+          onChange={(e) => setFile(e.target.files[0])}
+        />
+
+        <button onClick={handleUpload}>Analyze</button>
       </section>
 
       {/* HOW IT WORKS */}
       <section id="how" className="how">
-        <h2>How MediAI Works</h2>
-
-        <div className="grid">
-          <div className="card">
-            <h3>📄 Upload Report</h3>
-            <p>Upload your blood test report (PDF).</p>
-          </div>
-
-          <div className="card">
-            <h3>🤖 AI Analysis</h3>
-            <p>Our AI extracts and analyzes medical values.</p>
-          </div>
-
-          <div className="card">
-            <h3>📊 Insights</h3>
-            <p>Get clear results: Normal / Risk / Critical.</p>
-          </div>
-
-          <div className="card">
-            <h3>✅ Recommendations</h3>
-            <p>Health suggestions based on your data.</p>
-          </div>
-        </div>
+        <h2>How it Works</h2>
+        <p>Upload → AI analysis → Results</p>
       </section>
 
       {/* DASHBOARD */}
-      <section className="dashboard">
+      <section id="dashboard">
         <h2>Dashboard</h2>
-        <div className="stats">
-          <div>Reports<br/><span>0</span></div>
-          <div>Normal<br/><span>0</span></div>
-          <div>Risk<br/><span>0</span></div>
-          <div>Critical<br/><span>0</span></div>
-        </div>
       </section>
 
-      {/* FEATURES */}
-      <section className="features">
-        <h2>Built for Smart Healthcare</h2>
-
-        <div className="grid">
-          <div className="card">
-            <h3>🔐 Privacy First</h3>
-            <p>Your medical data is secure and not shared.</p>
-          </div>
-
-          <div className="card">
-            <h3>⚡ Fast Processing</h3>
-            <p>Get results in seconds using AI.</p>
-          </div>
-
-          <div className="card">
-            <h3>📊 Smart Insights</h3>
-            <p>Understand your health easily.</p>
-          </div>
-        </div>
+      {/* ABOUT */}
+      <section id="about">
+        <h2>About</h2>
       </section>
 
-      {/* LOGIN SECTION */}
-      <section className="login">
-        <h2>Welcome Back</h2>
-        <p>Login to access your dashboard</p>
-
-        <input placeholder="Username" />
-        <input placeholder="Password" type="password" />
-
-        <button className="primary">Login</button>
-      </section>
-
-      {/* FOOTER */}
-      <footer>
-        Secure your health · MediAI Diagnostics
-      </footer>
-
-      {/* STYLES */}
+      {/* STYLE */}
       <style jsx>{`
         .container {
-          background: #0b1c2c;
+          background: url("/bg.jpg") no-repeat center/cover;
           color: white;
           font-family: Arial;
         }
 
-        .navbar {
+        nav {
           display: flex;
           justify-content: space-between;
           padding: 20px;
-          background: #071521;
+          background: rgba(0,0,0,0.6);
         }
 
-        .navbar a {
+        nav a {
           margin: 0 10px;
           color: white;
-          text-decoration: none;
         }
 
-        .hero {
-          display: flex;
-          padding: 60px;
-          align-items: center;
-        }
-
-        .hero img {
-          width: 400px;
-          border-radius: 20px;
-        }
-
-        .big {
-          padding: 15px 30px;
-        }
-
-        .tags span {
-          margin-right: 10px;
-          background: rgba(255,255,255,0.1);
-          padding: 5px 10px;
-          border-radius: 10px;
-        }
-
-        .grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          gap: 20px;
-          padding: 40px;
-        }
-
-        .card {
-          background: rgba(255,255,255,0.05);
-          padding: 20px;
-          border-radius: 15px;
-        }
-
-        .dashboard, .features, .how {
-          padding: 40px;
-        }
-
-        .stats {
-          display: flex;
-          gap: 20px;
-        }
-
-        .stats div {
-          background: rgba(255,255,255,0.1);
-          padding: 20px;
-          border-radius: 10px;
+        section {
+          padding: 80px;
           text-align: center;
         }
 
-        .login {
-          padding: 40px;
-          text-align: center;
-        }
-
-        .login input {
-          display: block;
-          margin: 10px auto;
+        .upload input {
+          margin: 20px;
           padding: 10px;
-          width: 250px;
-          border-radius: 8px;
-          border: none;
         }
 
-        .primary {
-          background: linear-gradient(45deg, #00c6ff, #0072ff);
-          border: none;
+        button {
           padding: 10px 20px;
-          border-radius: 10px;
-          color: white;
-          cursor: pointer;
-        }
-
-        footer {
-          text-align: center;
-          padding: 20px;
-          background: #071521;
+          background: #00c6ff;
+          border: none;
+          border-radius: 8px;
         }
       `}</style>
     </div>
