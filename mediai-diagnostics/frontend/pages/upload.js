@@ -37,70 +37,72 @@ export default function Upload() {
 
   return (
     <div className="container">
-      <div className="overlay">
+      <div className="card">
         <h2>Upload Health Report</h2>
 
-        <input
-          type="file"
-          onChange={(e) => setFile(e.target.files[0])}
-        />
+        <input type="file" onChange={(e) => setFile(e.target.files[0])} />
 
-        <br /><br />
-
-        <button className="glow-btn" onClick={uploadFile}>
+        <button onClick={uploadFile}>
           {loading ? "Analyzing..." : "Analyze"}
         </button>
 
         {result && (
-          <div className="result-box">
-            <h3>Results:</h3>
+          <div className="result">
             <pre>{JSON.stringify(result, null, 2)}</pre>
           </div>
         )}
 
-        <br />
-
         <Link href="/">
-          <button className="back-btn">Back Home</button>
+          <button className="back">Back Home</button>
         </Link>
       </div>
 
       <style jsx>{`
+        /* FULL SCREEN BACKGROUND */
         .container {
-          min-height: 100vh;
-          background: url('/bg.jpg') no-repeat center center/cover;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100vh;
+          background: url('/bg.jpg') center center / cover no-repeat;
           display: flex;
           justify-content: center;
           align-items: center;
-          animation: zoom 20s infinite alternate ease-in-out;
         }
 
-        @keyframes zoom {
-          0% { background-size: 100%; }
-          100% { background-size: 115%; }
+        /* DARK OVERLAY (IMPORTANT FOR BLEND) */
+        .container::before {
+          content: "";
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.6);
         }
 
-        .overlay {
-          backdrop-filter: blur(20px);
-          background: rgba(0, 0, 0, 0.55);
+        /* GLASS CARD */
+        .card {
+          position: relative;
+          z-index: 2;
+          backdrop-filter: blur(15px);
+          background: rgba(255, 255, 255, 0.08);
           padding: 40px;
           border-radius: 20px;
           text-align: center;
           color: white;
           width: 400px;
-          box-shadow: 0 0 25px rgba(0, 198, 255, 0.5);
+          box-shadow: 0 0 30px rgba(0, 198, 255, 0.5);
         }
 
         h2 {
-          margin-bottom: 15px;
-          text-shadow: 0 0 10px #00c6ff;
+          margin-bottom: 20px;
         }
 
         input {
-          margin-top: 10px;
+          margin-bottom: 20px;
         }
 
-        .glow-btn {
+        button {
           margin-top: 10px;
           padding: 12px 25px;
           border: none;
@@ -112,33 +114,23 @@ export default function Upload() {
           transition: 0.3s;
         }
 
-        .glow-btn:hover {
+        button:hover {
           transform: scale(1.05);
           box-shadow: 0 0 30px #00c6ff;
         }
 
-        .back-btn {
+        .back {
+          background: gray;
           margin-top: 15px;
-          padding: 8px 15px;
-          border-radius: 8px;
-          border: none;
-          background: #ccc;
-          cursor: pointer;
         }
 
-        .result-box {
+        .result {
           margin-top: 20px;
-          text-align: left;
           background: rgba(0,0,0,0.7);
           padding: 10px;
           border-radius: 10px;
           max-height: 200px;
           overflow: auto;
-        }
-
-        pre {
-          font-size: 12px;
-          white-space: pre-wrap;
         }
       `}</style>
     </div>
