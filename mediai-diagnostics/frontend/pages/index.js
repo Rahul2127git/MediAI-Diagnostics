@@ -5,7 +5,7 @@ export default function Home() {
 
   const handleUpload = async () => {
     if (!file) {
-      alert("Select file first");
+      alert("Please select a file");
       return;
     }
 
@@ -24,7 +24,7 @@ export default function Home() {
       const data = await res.json();
       alert(JSON.stringify(data, null, 2));
     } catch {
-      alert("Backend error");
+      alert("Error connecting to backend");
     }
   };
 
@@ -37,7 +37,6 @@ export default function Home() {
         <div>
           <a href="#home">Home</a>
           <a href="#how">How it works</a>
-          <a href="#upload">Upload</a>
           <a href="#dashboard">Dashboard</a>
           <a href="#about">About</a>
         </div>
@@ -48,12 +47,19 @@ export default function Home() {
         <h1>MediAI Diagnostics</h1>
         <p>AI-powered blood report analysis</p>
 
-        <input type="file" onChange={(e) => setFile(e.target.files[0])} />
+        <div className="uploadBox">
+          <input
+            type="file"
+            onChange={(e) => setFile(e.target.files[0])}
+          />
 
-        <button onClick={handleUpload}>Upload & Analyze</button>
+          <button onClick={handleUpload}>
+            Upload Report
+          </button>
+        </div>
       </section>
 
-      {/* HOW */}
+      {/* HOW IT WORKS */}
       <section id="how">
         <h2>How it works</h2>
         <p>Upload → AI Analysis → Health Insights</p>
@@ -63,10 +69,10 @@ export default function Home() {
       <section id="dashboard">
         <h2>Dashboard</h2>
         <div className="stats">
-          <div>Total<br/>0</div>
-          <div>Normal<br/>0</div>
-          <div>Risk<br/>0</div>
-          <div>Critical<br/>0</div>
+          <div>Total<br />0</div>
+          <div>Normal<br />0</div>
+          <div>Risk<br />0</div>
+          <div>Critical<br />0</div>
         </div>
       </section>
 
@@ -76,14 +82,15 @@ export default function Home() {
         <p>MediAI helps analyze medical reports using AI.</p>
       </section>
 
+      {/* STYLES */}
       <style jsx>{`
         html {
           scroll-behavior: smooth;
         }
 
         .container {
-          background: url("/bg.jpg") no-repeat center center/cover;
           min-height: 100vh;
+          background: url("/bg.jpg") no-repeat center center/cover;
           color: white;
           font-family: Arial;
         }
@@ -111,21 +118,52 @@ export default function Home() {
           display: flex;
           flex-direction: column;
           justify-content: center;
+          align-items: center;
         }
 
-        input {
-          margin: 10px;
+        h1 {
+          font-size: 2.5rem;
+          margin-bottom: 10px;
+        }
+
+        p {
+          margin-bottom: 20px;
+        }
+
+        /* 🔥 UPLOAD UI */
+        .uploadBox {
+          margin-top: 20px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .uploadBox input {
           padding: 10px;
-        }
-
-        button {
-          padding: 12px 25px;
-          background: #00c6ff;
-          border: none;
           border-radius: 8px;
-          cursor: pointer;
+          border: none;
+          margin-bottom: 15px;
+          background: rgba(255,255,255,0.2);
+          color: white;
         }
 
+        .uploadBox button {
+          padding: 14px 30px;
+          border: none;
+          border-radius: 10px;
+          background: linear-gradient(45deg, #00c6ff, #0072ff);
+          color: white;
+          font-size: 16px;
+          cursor: pointer;
+          box-shadow: 0 0 20px rgba(0,198,255,0.7);
+          transition: 0.3s;
+        }
+
+        .uploadBox button:hover {
+          transform: scale(1.05);
+        }
+
+        /* DASHBOARD */
         .stats {
           display: flex;
           justify-content: center;
@@ -133,7 +171,7 @@ export default function Home() {
         }
 
         .stats div {
-          background: rgba(0,0,0,0.5);
+          background: rgba(0,0,0,0.6);
           padding: 20px;
           border-radius: 10px;
         }
