@@ -18,7 +18,7 @@ export default function Upload() {
 
     try {
       const res = await fetch(
-        "https://YOUR-RENDER-URL.onrender.com/analyze/",
+        "https://mediai-diagnostics-xxxx.onrender.com/analyze/",
         {
           method: "POST",
           body: formData,
