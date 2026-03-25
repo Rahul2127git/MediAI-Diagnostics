@@ -1,120 +1,54 @@
-import { useState } from "react";
-import Link from "next/link";
+<div className="container">
+  <div className="overlay">
+    <h2>Upload Health Report</h2>
 
-export default function Upload() {
-  const [file, setFile] = useState(null);
-  const [result, setResult] = useState(null);
-  const [loading, setLoading] = useState(false);
+    <input type="file" onChange={(e) => setFile(e.target.files[0])} />
 
-  const uploadFile = async () => {
-    if (!file) {
-      alert("Please select a file");
-      return;
+    <br /><br />
+
+    <button onClick={uploadFile}>
+      {loading ? "Analyzing..." : "Analyze"}
+    </button>
+
+    {result && (
+      <pre>{JSON.stringify(result, null, 2)}</pre>
+    )}
+
+    <br />
+
+    <Link href="/">Back Home</Link>
+  </div>
+
+  <style jsx>{`
+    .container {
+      min-height: 100vh;
+      background: url('/bg.jpg') no-repeat center center/cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: zoom 20s infinite alternate ease-in-out;
     }
 
-    setLoading(true);
-
-    const formData = new FormData();
-    formData.append("file", file);
-
-    try {
-      const res = await fetch(
-        "https://mediai-diagnostics-xxxx.onrender.com/analyze/", // 🔴 CHANGE THIS
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-
-      const data = await res.json();
-      setResult(data);
-    } catch (error) {
-      console.error(error);
-      alert("Error connecting to backend");
+    @keyframes zoom {
+      0% { background-size: 100%; }
+      100% { background-size: 110%; }
     }
 
-    setLoading(false);
-  };
+    .overlay {
+      backdrop-filter: blur(15px);
+      background: rgba(0,0,0,0.5);
+      padding: 40px;
+      border-radius: 15px;
+      text-align: center;
+      color: white;
+    }
 
-  return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "linear-gradient(to right, #141e30, #243b55)",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        color: "white",
-        fontFamily: "Arial",
-      }}
-    >
-      <div
-        style={{
-          backdropFilter: "blur(10px)",
-          background: "rgba(255,255,255,0.1)",
-          padding: "40px",
-          borderRadius: "12px",
-          textAlign: "center",
-          width: "400px",
-        }}
-      >
-        <h2>Upload Health Report</h2>
-
-        <input
-          type="file"
-          onChange={(e) => setFile(e.target.files[0])}
-          style={{ marginTop: "20px" }}
-        />
-
-        <br /><br />
-
-        <button
-          onClick={uploadFile}
-          style={{
-            padding: "10px 20px",
-            border: "none",
-            borderRadius: "8px",
-            background: "#00c6ff",
-            color: "black",
-            cursor: "pointer",
-          }}
-        >
-          {loading ? "Analyzing..." : "Analyze"}
-        </button>
-
-        {result && (
-          <div style={{ marginTop: "20px", textAlign: "left" }}>
-            <h3>Results:</h3>
-            <pre
-              style={{
-                background: "black",
-                padding: "10px",
-                borderRadius: "8px",
-                overflowX: "auto",
-              }}
-            >
-              {JSON.stringify(result, null, 2)}
-            </pre>
-          </div>
-        )}
-
-        <br />
-
-        <Link href="/">
-          <button
-            style={{
-              marginTop: "15px",
-              padding: "8px 15px",
-              border: "none",
-              borderRadius: "8px",
-              background: "#ccc",
-              cursor: "pointer",
-            }}
-          >
-            Back Home
-          </button>
-        </Link>
-      </div>
-    </div>
-  );
-}
+    button {
+      padding: 10px 20px;
+      border-radius: 8px;
+      background: #00c6ff;
+      border: none;
+      cursor: pointer;
+    }
+  `}</style>
+</div>
