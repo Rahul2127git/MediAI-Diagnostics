@@ -26,33 +26,47 @@ export default function Home() {
   };
 
   return (
-    <div className="container">
+    <div className="main">
 
       {/* NAVBAR */}
-      <nav>
+      <nav className="nav">
         <h2>MediAI</h2>
         <div>
           <a href="#home">Home</a>
           <a href="#how">How it works</a>
-          <a href="#upload">Upload</a>
+          <a href="#upload">File upload</a>
           <a href="#dashboard">Dashboard</a>
           <a href="#about">About</a>
         </div>
+        <a href="#upload"><button>Try Now</button></a>
       </nav>
 
       {/* HERO */}
       <section id="home" className="hero">
-        <h1>MediAI Diagnostics</h1>
-        <p>AI-powered blood report analysis</p>
+        <div>
+          <h1>Analyze Blood Reports Instantly</h1>
+          <p>
+            AI-powered health report analysis. Upload your report and get
+            clear medical insights instantly.
+          </p>
 
-        <a href="#upload">
-          <button>Upload Report</button>
-        </a>
+          <a href="#upload">
+            <button className="primary">Upload Report</button>
+          </a>
+
+          <div className="tags">
+            <span>⚡ Fast</span>
+            <span>🔒 Private</span>
+            <span>🧠 AI Powered</span>
+          </div>
+        </div>
+
+        <img src="/bg.jpg" />
       </section>
 
-      {/* UPLOAD SECTION (MAIN FIX) */}
+      {/* UPLOAD SECTION */}
       <section id="upload" className="upload">
-        <h2>Upload Health Report</h2>
+        <h2>Upload your Report</h2>
 
         <input
           type="file"
@@ -64,65 +78,150 @@ export default function Home() {
       </section>
 
       {/* HOW IT WORKS */}
-      <section id="how">
-        <h2>How it works</h2>
-        <p>Upload → AI Analyze → Get Results</p>
+      <section id="how" className="how">
+        <h2>How MediAI Works</h2>
+
+        <div className="grid">
+          <div className="card">
+            <h3>📄 Upload</h3>
+            <p>Upload your blood report</p>
+          </div>
+
+          <div className="card">
+            <h3>🤖 AI Analysis</h3>
+            <p>AI extracts medical data</p>
+          </div>
+
+          <div className="card">
+            <h3>📊 Risk Detection</h3>
+            <p>Detect abnormalities</p>
+          </div>
+
+          <div className="card">
+            <h3>✅ Results</h3>
+            <p>Clear insights & suggestions</p>
+          </div>
+        </div>
       </section>
 
       {/* DASHBOARD */}
-      <section id="dashboard">
+      <section id="dashboard" className="dashboard">
         <h2>Dashboard</h2>
-        <p>Results will appear here</p>
+
+        <div className="stats">
+          <div>Total<br/><span>0</span></div>
+          <div>Normal<br/><span>0</span></div>
+          <div>Risk<br/><span>0</span></div>
+          <div>Critical<br/><span>0</span></div>
+        </div>
       </section>
 
-      {/* ABOUT */}
-      <section id="about">
-        <h2>About</h2>
-        <p>AI medical assistant</p>
+      {/* FEATURES */}
+      <section id="about" className="features">
+        <h2>Built for Smart Healthcare</h2>
+
+        <div className="grid">
+          <div className="card">🔐 Privacy First</div>
+          <div className="card">⚡ Fast Processing</div>
+          <div className="card">📊 Smart Insights</div>
+          <div className="card">🧠 AI Powered</div>
+        </div>
+      </section>
+
+      {/* LOGIN */}
+      <section className="login">
+        <h2>Welcome Back</h2>
+        <input placeholder="Username" />
+        <input placeholder="Password" type="password" />
+        <button>Login</button>
       </section>
 
       {/* STYLES */}
       <style jsx>{`
-        .container {
-          background: url("/bg.jpg") no-repeat center/cover;
+        .main {
+          background: #0b1c2c;
           color: white;
-          min-height: 100vh;
           font-family: Arial;
         }
 
-        nav {
+        .nav {
           display: flex;
           justify-content: space-between;
           padding: 20px;
-          background: rgba(0,0,0,0.5);
+          background: #071521;
         }
 
-        nav a {
+        .nav a {
           margin: 0 10px;
           color: white;
           text-decoration: none;
         }
 
-        section {
-          padding: 80px 20px;
-          text-align: center;
+        .hero {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 60px;
         }
 
-        .hero h1 {
-          font-size: 3rem;
+        .hero img {
+          width: 300px;
+          border-radius: 20px;
         }
 
-        input {
-          margin: 20px;
-          padding: 10px;
-        }
-
-        button {
+        .primary {
+          margin-top: 20px;
           padding: 12px 25px;
           background: #00c6ff;
           border: none;
           border-radius: 10px;
-          color: black;
+        }
+
+        .tags span {
+          margin-right: 10px;
+          background: rgba(255,255,255,0.1);
+          padding: 5px 10px;
+          border-radius: 10px;
+        }
+
+        section {
+          padding: 60px 20px;
+          text-align: center;
+        }
+
+        .grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+          gap: 20px;
+        }
+
+        .card {
+          background: rgba(255,255,255,0.05);
+          padding: 20px;
+          border-radius: 15px;
+        }
+
+        .stats {
+          display: flex;
+          justify-content: center;
+          gap: 20px;
+        }
+
+        .stats div {
+          background: rgba(255,255,255,0.1);
+          padding: 20px;
+          border-radius: 10px;
+        }
+
+        input {
+          display: block;
+          margin: 10px auto;
+          padding: 10px;
+          border-radius: 8px;
+          border: none;
+        }
+
+        button {
           cursor: pointer;
         }
       `}</style>
