@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
 
 export default function Home() {
@@ -21,12 +20,14 @@ export default function Home() {
         <div className="nav-links">
           <a onClick={() => scrollTo("home")}>Home</a>
           <a onClick={() => scrollTo("how")}>How it works</a>
-          <a onClick={() => router.push("/upload")}>File upload</a>
           <a onClick={() => scrollTo("dashboard")}>Dashboard</a>
           <a onClick={() => scrollTo("about")}>About</a>
         </div>
 
-        <button className="primary" onClick={() => router.push("/upload")}>
+        <button
+          className="primary"
+          onClick={() => router.push("/upload")}
+        >
           Try Now
         </button>
       </nav>
@@ -36,8 +37,8 @@ export default function Home() {
         <div className="left">
           <h1>Analyze Medical Reports Instantly</h1>
           <p>
-            AI-powered blood report analysis. Upload your report and get
-            clear health insights in seconds.
+            Upload your blood report (PDF, CSV, Excel, Image) and get
+            AI-powered health insights instantly.
           </p>
 
           <button
@@ -66,7 +67,7 @@ export default function Home() {
         <div className="grid">
           <div className="card">
             <h3>📄 Upload Report</h3>
-            <p>Upload your blood test report (PDF).</p>
+            <p>Upload PDF, CSV, Excel or Image reports.</p>
           </div>
 
           <div className="card">
@@ -81,7 +82,7 @@ export default function Home() {
 
           <div className="card">
             <h3>✅ Recommendations</h3>
-            <p>Health suggestions based on data.</p>
+            <p>Personalized health suggestions.</p>
           </div>
         </div>
       </section>
@@ -110,7 +111,7 @@ export default function Home() {
 
           <div className="card">
             <h3>⚡ Fast Processing</h3>
-            <p>Instant AI analysis.</p>
+            <p>Instant AI-powered analysis.</p>
           </div>
 
           <div className="card">
@@ -137,7 +138,6 @@ export default function Home() {
           font-family: Arial;
         }
 
-        /* NAVBAR */
         .navbar {
           display: flex;
           justify-content: space-between;
@@ -156,7 +156,6 @@ export default function Home() {
           text-decoration: none;
         }
 
-        /* HERO */
         .hero {
           display: flex;
           padding: 60px;
@@ -181,7 +180,6 @@ export default function Home() {
           border-radius: 10px;
         }
 
-        /* GRID */
         .grid {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -201,13 +199,11 @@ export default function Home() {
           box-shadow: 0 0 20px rgba(0,198,255,0.4);
         }
 
-        /* SECTIONS */
         .dashboard, .features, .how {
           padding: 60px 40px;
           text-align: center;
         }
 
-        /* STATS */
         .stats {
           display: flex;
           justify-content: center;
@@ -222,7 +218,6 @@ export default function Home() {
           width: 120px;
         }
 
-        /* BUTTON */
         .primary {
           background: linear-gradient(45deg, #00c6ff, #0072ff);
           border: none;
@@ -232,7 +227,6 @@ export default function Home() {
           cursor: pointer;
         }
 
-        /* FOOTER */
         footer {
           text-align: center;
           padding: 20px;
