@@ -53,11 +53,24 @@ export default function Upload() {
           Back Home
         </button>
 
-        {/* RESULT */}
+        {/* 🔥 RESULT UI */}
         {result && (
-          <div className="result">
-            <h2>Result</h2>
-            <pre>{JSON.stringify(result, null, 2)}</pre>
+          <div className="result-card">
+
+            <h2>Analysis Result</h2>
+
+            <div className={`status ${result.status?.toLowerCase()}`}>
+              {result.status}
+            </div>
+
+            <h3>Recommendations</h3>
+
+            <ul>
+              {result.recommendations?.map((rec, i) => (
+                <li key={i}>✔ {rec}</li>
+              ))}
+            </ul>
+
           </div>
         )}
       </div>
@@ -78,6 +91,7 @@ export default function Upload() {
           border-radius: 20px;
           text-align: center;
           color: white;
+          width: 400px;
         }
 
         input {
@@ -89,14 +103,52 @@ export default function Upload() {
           padding: 10px 20px;
           border: none;
           border-radius: 10px;
-          background: #00c6ff;
-          color: black;
+          background: linear-gradient(45deg, #00c6ff, #0072ff);
+          color: white;
           cursor: pointer;
         }
 
-        .result {
+        button:hover {
+          transform: scale(1.05);
+        }
+
+        /* RESULT UI */
+        .result-card {
           margin-top: 20px;
+          padding: 20px;
+          border-radius: 15px;
+          background: rgba(0,0,0,0.7);
+          text-align: center;
+        }
+
+        .status {
+          margin: 15px 0;
+          padding: 10px;
+          border-radius: 10px;
+          font-weight: bold;
+          font-size: 18px;
+        }
+
+        /* COLORS */
+        .status.normal {
+          background: #00c853;
+        }
+
+        .status.risk {
+          background: #ffab00;
+        }
+
+        .status.critical {
+          background: #d50000;
+        }
+
+        ul {
           text-align: left;
+          margin-top: 10px;
+        }
+
+        li {
+          margin-bottom: 8px;
         }
       `}</style>
     </div>
