@@ -1,5 +1,24 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 export default function Upload() {
   const [file, setFile] = useState(null);
@@ -26,11 +45,23 @@ export default function Upload() {
 
       const data = await res.json();
       setResult(data);
-    } catch (err) {
+    } catch {
       alert("Error connecting to backend");
     }
 
     setLoading(false);
+  };
+
+  // 📊 Dummy values (you can later replace with real extracted values)
+  const chartData = {
+    labels: ["Glucose", "Cholesterol", "Hemoglobin"],
+    datasets: [
+      {
+        label: "Health Values",
+        data: [90, 180, 13],
+        backgroundColor: ["#00c853", "#ffab00", "#00c6ff"],
+      },
+    ],
   };
 
   return (
@@ -53,18 +84,42 @@ export default function Upload() {
           Back Home
         </button>
 
-        {/* 🔥 RESULT UI */}
+        {/* RESULT */}
         {result && (
           <div className="result-card">
 
-            <h2>Analysis Result</h2>
+            <h2>Health Analysis</h2>
 
+            {/* STATUS */}
             <div className={`status ${result.status?.toLowerCase()}`}>
               {result.status}
             </div>
 
-            <h3>Recommendations</h3>
+            {/* SCORE */}
+            <div className="score-box">
+              <p>Health Score</p>
+              <div className="progress">
+                <div
+                  className={`bar ${result.status?.toLowerCase()}`}
+                  style={{
+                    width:
+                      result.status === "Normal"
+                        ? "90%"
+                        : result.status === "Risk"
+                        ? "60%"
+                        : "30%"
+                  }}
+                ></div>
+              </div>
+            </div>
 
+            {/* CHART */}
+            <div className="chart">
+              <Bar data={chartData} />
+            </div>
+
+            {/* RECOMMENDATIONS */}
+            <h3>Recommendations</h3>
             <ul>
               {result.recommendations?.map((rec, i) => (
                 <li key={i}>✔ {rec}</li>
@@ -77,7 +132,7 @@ export default function Upload() {
 
       <style jsx>{`
         .container {
-          height: 100vh;
+          min-height: 100vh;
           background: url('/bg.jpg') center/cover no-repeat;
           display: flex;
           justify-content: center;
@@ -91,34 +146,25 @@ export default function Upload() {
           border-radius: 20px;
           text-align: center;
           color: white;
-          width: 400px;
-        }
-
-        input {
-          margin: 20px 0;
+          width: 450px;
         }
 
         button {
           margin: 10px;
           padding: 10px 20px;
-          border: none;
           border-radius: 10px;
+          border: none;
           background: linear-gradient(45deg, #00c6ff, #0072ff);
           color: white;
           cursor: pointer;
         }
 
-        button:hover {
-          transform: scale(1.05);
-        }
-
-        /* RESULT UI */
+        /* RESULT */
         .result-card {
           margin-top: 20px;
           padding: 20px;
           border-radius: 15px;
           background: rgba(0,0,0,0.7);
-          text-align: center;
         }
 
         .status {
@@ -126,10 +172,8 @@ export default function Upload() {
           padding: 10px;
           border-radius: 10px;
           font-weight: bold;
-          font-size: 18px;
         }
 
-        /* COLORS */
         .status.normal {
           background: #00c853;
         }
@@ -142,13 +186,39 @@ export default function Upload() {
           background: #d50000;
         }
 
-        ul {
-          text-align: left;
-          margin-top: 10px;
+        /* SCORE */
+        .progress {
+          height: 12px;
+          background: #333;
+          border-radius: 10px;
+          overflow: hidden;
         }
 
-        li {
-          margin-bottom: 8px;
+        .bar {
+          height: 100%;
+        }
+
+        .bar.normal {
+          background: #00c853;
+          width: 90%;
+        }
+
+        .bar.risk {
+          background: #ffab00;
+          width: 60%;
+        }
+
+        .bar.critical {
+          background: #d50000;
+          width: 30%;
+        }
+
+        .chart {
+          margin: 20px 0;
+        }
+
+        ul {
+          text-align: left;
         }
       `}</style>
     </div>
