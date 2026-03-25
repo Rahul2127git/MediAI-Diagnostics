@@ -4,7 +4,7 @@ export default function Home() {
   const [file, setFile] = useState(null);
 
   const handleUpload = async () => {
-    if (!file) return alert("Select a file");
+    if (!file) return alert("Select file");
 
     const formData = new FormData();
     formData.append("file", file);
@@ -50,7 +50,7 @@ export default function Home() {
         </a>
       </section>
 
-      {/* UPLOAD SECTION (MAIN FEATURE) */}
+      {/* UPLOAD SECTION (MAIN FIX) */}
       <section id="upload" className="upload">
         <h2>Upload Health Report</h2>
 
@@ -64,26 +64,29 @@ export default function Home() {
       </section>
 
       {/* HOW IT WORKS */}
-      <section id="how" className="how">
-        <h2>How it Works</h2>
-        <p>Upload → AI analysis → Results</p>
+      <section id="how">
+        <h2>How it works</h2>
+        <p>Upload → AI Analyze → Get Results</p>
       </section>
 
       {/* DASHBOARD */}
       <section id="dashboard">
         <h2>Dashboard</h2>
+        <p>Results will appear here</p>
       </section>
 
       {/* ABOUT */}
       <section id="about">
         <h2>About</h2>
+        <p>AI medical assistant</p>
       </section>
 
-      {/* STYLE */}
+      {/* STYLES */}
       <style jsx>{`
         .container {
           background: url("/bg.jpg") no-repeat center/cover;
           color: white;
+          min-height: 100vh;
           font-family: Arial;
         }
 
@@ -91,29 +94,36 @@ export default function Home() {
           display: flex;
           justify-content: space-between;
           padding: 20px;
-          background: rgba(0,0,0,0.6);
+          background: rgba(0,0,0,0.5);
         }
 
         nav a {
           margin: 0 10px;
           color: white;
+          text-decoration: none;
         }
 
         section {
-          padding: 80px;
+          padding: 80px 20px;
           text-align: center;
         }
 
-        .upload input {
+        .hero h1 {
+          font-size: 3rem;
+        }
+
+        input {
           margin: 20px;
           padding: 10px;
         }
 
         button {
-          padding: 10px 20px;
+          padding: 12px 25px;
           background: #00c6ff;
           border: none;
-          border-radius: 8px;
+          border-radius: 10px;
+          color: black;
+          cursor: pointer;
         }
       `}</style>
     </div>
