@@ -3,16 +3,12 @@ import Link from "next/link";
 
 export default function Upload() {
   const [file, setFile] = useState(null);
-  const [result, setResult] = useState(null);
-  const [loading, setLoading] = useState(false);
 
-  const uploadFile = async () => {
+  const handleUpload = async () => {
     if (!file) {
       alert("Please select a file");
       return;
     }
-
-    setLoading(true);
 
     const formData = new FormData();
     formData.append("file", file);
@@ -27,118 +23,72 @@ export default function Upload() {
       );
 
       const data = await res.json();
-      setResult(data);
-    } catch (error) {
+      alert(JSON.stringify(data, null, 2));
+    } catch (err) {
       alert("Error connecting to backend");
     }
-
-    setLoading(false);
   };
 
   return (
-    <div className="container">
-      <div className="card">
-        <h2>Upload Health Report</h2>
+    <div className="bg">
 
-        <input
-          type="file"
-          onChange={(e) => setFile(e.target.files[0])}
-        />
+      <h1>Upload Health Report</h1>
 
-        <br /><br />
+      <input
+        type="file"
+        onChange={(e) => setFile(e.target.files[0])}
+      />
 
-        <button onClick={uploadFile}>
-          {loading ? "Analyzing..." : "Analyze"}
-        </button>
+      <button onClick={handleUpload}>Analyze</button>
 
-        {result && (
-          <div className="result">
-            <pre>{JSON.stringify(result, null, 2)}</pre>
-          </div>
-        )}
-
-        <br />
-
-        <Link href="/">
-          <button className="back">Back Home</button>
-        </Link>
-      </div>
+      <Link href="/">
+        <button className="back">Back Home</button>
+      </Link>
 
       <style jsx>{`
-        /* FULL BACKGROUND */
-        .container {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
+        .bg {
           height: 100vh;
-          background: url('/bg.jpg') center center / cover no-repeat;
+          width: 100%;
+          background: url("/bg.jpg") no-repeat center center/cover;
           display: flex;
+          flex-direction: column;
           justify-content: center;
           align-items: center;
-        }
-
-        /* DARK OVERLAY FOR VISIBILITY */
-        .container::before {
-          content: "";
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          background: rgba(0, 0, 0, 0.5);
-        }
-
-        /* ❌ BOX REMOVED (CLEAN UI) */
-        .card {
-          position: relative;
-          z-index: 2;
-          text-align: center;
           color: white;
+          font-family: Arial;
+          text-align: center;
         }
 
-        h2 {
-          font-size: 2rem;
-          text-shadow: 0 0 20px #00c6ff;
+        h1 {
+          font-size: 2.5rem;
+          margin-bottom: 20px;
+          text-shadow: 0 0 20px rgba(0,0,0,0.7);
         }
 
         input {
-          margin-top: 15px;
+          margin: 10px;
+          padding: 10px;
+          background: rgba(255,255,255,0.2);
+          border: none;
+          border-radius: 8px;
           color: white;
         }
 
         button {
-          margin-top: 10px;
+          margin-top: 15px;
           padding: 12px 25px;
           border: none;
           border-radius: 10px;
           background: linear-gradient(45deg, #00c6ff, #0072ff);
           color: white;
           cursor: pointer;
-          box-shadow: 0 0 20px #00c6ff;
-          transition: 0.3s;
-        }
-
-        button:hover {
-          transform: scale(1.05);
-          box-shadow: 0 0 40px #00c6ff;
+          font-size: 16px;
+          box-shadow: 0 0 20px rgba(0, 198, 255, 0.7);
         }
 
         .back {
           background: gray;
-          margin-top: 15px;
-        }
-
-        .result {
-          margin-top: 20px;
-          background: rgba(0,0,0,0.7);
-          padding: 10px;
-          border-radius: 10px;
-          max-height: 200px;
-          overflow: auto;
-        }
-
-        pre {
-          font-size: 12px;
-          white-space: pre-wrap;
+          margin-top: 10px;
         }
       `}</style>
     </div>
