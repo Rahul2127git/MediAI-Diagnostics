@@ -9,7 +9,7 @@ export default function Upload() {
     const formData = new FormData();
     formData.append("file", file);
 
-    const res = await fetch("https://YOUR-RENDER-URL.onrender.com/analyze/", {
+    const res = await fetch("https://mediai-diagnostics-qpdf.onrender.com/analyze/", {
       method: "POST",
       body: formData,
     });
