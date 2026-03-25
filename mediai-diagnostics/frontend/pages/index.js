@@ -1,6 +1,16 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const router = useRouter();
+
+  const scrollTo = (id) => {
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <div className="container">
 
@@ -9,16 +19,16 @@ export default function Home() {
         <h2>MediAI</h2>
 
         <div className="nav-links">
-          <a href="#home">Home</a>
-          <a href="#how">How it works</a>
-          <Link href="/upload">File upload</Link>
-          <a href="#dashboard">Dashboard</a>
-          <a href="#about">About</a>
+          <a onClick={() => scrollTo("home")}>Home</a>
+          <a onClick={() => scrollTo("how")}>How it works</a>
+          <a onClick={() => router.push("/upload")}>File upload</a>
+          <a onClick={() => scrollTo("dashboard")}>Dashboard</a>
+          <a onClick={() => scrollTo("about")}>About</a>
         </div>
 
-        <Link href="/upload">
-          <button className="primary">Try Now</button>
-        </Link>
+        <button className="primary" onClick={() => router.push("/upload")}>
+          Try Now
+        </button>
       </nav>
 
       {/* HERO */}
@@ -30,9 +40,12 @@ export default function Home() {
             clear health insights in seconds.
           </p>
 
-          <Link href="/upload">
-            <button className="primary big">Upload Report</button>
-          </Link>
+          <button
+            className="primary big"
+            onClick={() => router.push("/upload")}
+          >
+            Upload Report
+          </button>
 
           <div className="tags">
             <span>⚡ Fast</span>
@@ -137,7 +150,8 @@ export default function Home() {
         }
 
         .nav-links a {
-          margin: 0 10px;
+          margin: 0 12px;
+          cursor: pointer;
           color: white;
           text-decoration: none;
         }
