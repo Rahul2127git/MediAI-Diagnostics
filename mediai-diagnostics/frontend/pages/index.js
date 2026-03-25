@@ -2,7 +2,6 @@ import { useState } from "react";
 
 export default function Home() {
   const [file, setFile] = useState(null);
-  const [result, setResult] = useState(null);
 
   const handleUpload = async () => {
     if (!file) return alert("Select a file");
@@ -20,7 +19,7 @@ export default function Home() {
       );
 
       const data = await res.json();
-      setResult(data);
+      alert(JSON.stringify(data, null, 2));
     } catch {
       alert("Backend error");
     }
@@ -41,69 +40,49 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* HERO + UPLOAD (COMBINED) */}
+      {/* HERO */}
       <section id="home" className="hero">
-        <h1>Analyze Blood Reports Instantly</h1>
-        <p>AI-powered health insights from medical reports</p>
+        <h1>MediAI Diagnostics</h1>
+        <p>AI-powered blood report analysis</p>
 
-        <div className="uploadBox">
-          <input
-            type="file"
-            accept=".pdf,.csv,.xlsx,.xls,.png,.jpg,.jpeg"
-            onChange={(e) => setFile(e.target.files[0])}
-          />
-
-          <button onClick={handleUpload}>Analyze</button>
-        </div>
+        <a href="#upload">
+          <button>Upload Report</button>
+        </a>
       </section>
 
-      {/* RESULT SECTION */}
-      {result && (
-        <section className="result">
-          <h2>Analysis Result</h2>
-          <pre>{JSON.stringify(result, null, 2)}</pre>
-        </section>
-      )}
+      {/* UPLOAD SECTION (MAIN FEATURE) */}
+      <section id="upload" className="upload">
+        <h2>Upload Health Report</h2>
+
+        <input
+          type="file"
+          accept=".pdf,.csv,.xlsx,.xls,.png,.jpg,.jpeg"
+          onChange={(e) => setFile(e.target.files[0])}
+        />
+
+        <button onClick={handleUpload}>Analyze</button>
+      </section>
 
       {/* HOW IT WORKS */}
       <section id="how" className="how">
-        <h2>How It Works</h2>
-
-        <div className="grid">
-          <div className="card">📄 Upload Report</div>
-          <div className="card">🤖 AI Analysis</div>
-          <div className="card">📊 Insights</div>
-          <div className="card">✅ Recommendations</div>
-        </div>
+        <h2>How it Works</h2>
+        <p>Upload → AI analysis → Results</p>
       </section>
 
       {/* DASHBOARD */}
-      <section id="dashboard" className="dashboard">
+      <section id="dashboard">
         <h2>Dashboard</h2>
-
-        <div className="stats">
-          <div>Total<br/><span>0</span></div>
-          <div>Normal<br/><span>0</span></div>
-          <div>Risk<br/><span>0</span></div>
-          <div>Critical<br/><span>0</span></div>
-        </div>
       </section>
 
-      {/* FEATURES */}
-      <section id="about" className="features">
-        <h2>Built for Smart Healthcare</h2>
-
-        <div className="grid">
-          <div className="card">🔐 Privacy First</div>
-          <div className="card">⚡ Fast AI</div>
-          <div className="card">📊 Clear Results</div>
-        </div>
+      {/* ABOUT */}
+      <section id="about">
+        <h2>About</h2>
       </section>
 
-      {/* STYLES */}
+      {/* STYLE */}
       <style jsx>{`
         .container {
-          background: #0b1c2c;
+          background: url("/bg.jpg") no-repeat center/cover;
           color: white;
           font-family: Arial;
         }
@@ -112,7 +91,7 @@ export default function Home() {
           display: flex;
           justify-content: space-between;
           padding: 20px;
-          background: #071521;
+          background: rgba(0,0,0,0.6);
         }
 
         nav a {
@@ -120,57 +99,21 @@ export default function Home() {
           color: white;
         }
 
-        .hero {
-          text-align: center;
+        section {
           padding: 80px;
-          background: url("/bg.jpg") center/cover;
+          text-align: center;
         }
 
-        .uploadBox {
-          margin-top: 20px;
-        }
-
-        input {
+        .upload input {
+          margin: 20px;
           padding: 10px;
-          margin-right: 10px;
         }
 
         button {
           padding: 10px 20px;
-          background: linear-gradient(45deg, #00c6ff, #0072ff);
+          background: #00c6ff;
           border: none;
           border-radius: 8px;
-          color: white;
-        }
-
-        .grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          gap: 20px;
-          padding: 40px;
-        }
-
-        .card {
-          background: rgba(255,255,255,0.05);
-          padding: 20px;
-          border-radius: 10px;
-        }
-
-        .stats {
-          display: flex;
-          gap: 20px;
-          padding: 20px;
-        }
-
-        .stats div {
-          background: rgba(255,255,255,0.1);
-          padding: 20px;
-          border-radius: 10px;
-        }
-
-        .result {
-          padding: 40px;
-          background: black;
         }
       `}</style>
     </div>
