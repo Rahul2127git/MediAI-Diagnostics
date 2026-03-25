@@ -40,7 +40,12 @@ export default function Upload() {
       <div className="card">
         <h2>Upload Health Report</h2>
 
-        <input type="file" onChange={(e) => setFile(e.target.files[0])} />
+        <input
+          type="file"
+          onChange={(e) => setFile(e.target.files[0])}
+        />
+
+        <br /><br />
 
         <button onClick={uploadFile}>
           {loading ? "Analyzing..." : "Analyze"}
@@ -52,13 +57,15 @@ export default function Upload() {
           </div>
         )}
 
+        <br />
+
         <Link href="/">
           <button className="back">Back Home</button>
         </Link>
       </div>
 
       <style jsx>{`
-        /* FULL SCREEN BACKGROUND */
+        /* FULL BACKGROUND */
         .container {
           position: fixed;
           top: 0;
@@ -71,35 +78,31 @@ export default function Upload() {
           align-items: center;
         }
 
-        /* DARK OVERLAY (IMPORTANT FOR BLEND) */
+        /* DARK OVERLAY FOR VISIBILITY */
         .container::before {
           content: "";
           position: absolute;
           width: 100%;
           height: 100%;
-          background: rgba(0, 0, 0, 0.6);
+          background: rgba(0, 0, 0, 0.5);
         }
 
-        /* GLASS CARD */
+        /* ❌ BOX REMOVED (CLEAN UI) */
         .card {
           position: relative;
           z-index: 2;
-          backdrop-filter: blur(15px);
-          background: rgba(255, 255, 255, 0.08);
-          padding: 40px;
-          border-radius: 20px;
           text-align: center;
           color: white;
-          width: 400px;
-          box-shadow: 0 0 30px rgba(0, 198, 255, 0.5);
         }
 
         h2 {
-          margin-bottom: 20px;
+          font-size: 2rem;
+          text-shadow: 0 0 20px #00c6ff;
         }
 
         input {
-          margin-bottom: 20px;
+          margin-top: 15px;
+          color: white;
         }
 
         button {
@@ -110,13 +113,13 @@ export default function Upload() {
           background: linear-gradient(45deg, #00c6ff, #0072ff);
           color: white;
           cursor: pointer;
-          box-shadow: 0 0 15px #00c6ff;
+          box-shadow: 0 0 20px #00c6ff;
           transition: 0.3s;
         }
 
         button:hover {
           transform: scale(1.05);
-          box-shadow: 0 0 30px #00c6ff;
+          box-shadow: 0 0 40px #00c6ff;
         }
 
         .back {
@@ -131,6 +134,11 @@ export default function Upload() {
           border-radius: 10px;
           max-height: 200px;
           overflow: auto;
+        }
+
+        pre {
+          font-size: 12px;
+          white-space: pre-wrap;
         }
       `}</style>
     </div>
