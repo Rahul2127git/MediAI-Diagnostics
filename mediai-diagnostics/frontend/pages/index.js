@@ -4,7 +4,10 @@ export default function Home() {
   const [file, setFile] = useState(null);
 
   const handleUpload = async () => {
-    if (!file) return alert("Select file");
+    if (!file) {
+      alert("Select file first");
+      return;
+    }
 
     const formData = new FormData();
     formData.append("file", file);
@@ -26,179 +29,101 @@ export default function Home() {
   };
 
   return (
-    <div className="main">
+    <div className="container">
 
       {/* NAVBAR */}
-      <nav className="nav">
+      <nav>
         <h2>MediAI</h2>
         <div>
           <a href="#home">Home</a>
           <a href="#how">How it works</a>
-          <a href="#upload">File upload</a>
+          <a href="#upload">Upload</a>
           <a href="#dashboard">Dashboard</a>
           <a href="#about">About</a>
         </div>
-        <a href="#upload"><button>Try Now</button></a>
       </nav>
 
-      {/* HERO */}
+      {/* HERO + UPLOAD */}
       <section id="home" className="hero">
-        <div>
-          <h1>Analyze Blood Reports Instantly</h1>
-          <p>
-            AI-powered health report analysis. Upload your report and get
-            clear medical insights instantly.
-          </p>
+        <h1>MediAI Diagnostics</h1>
+        <p>AI-powered blood report analysis</p>
 
-          <a href="#upload">
-            <button className="primary">Upload Report</button>
-          </a>
+        <input type="file" onChange={(e) => setFile(e.target.files[0])} />
 
-          <div className="tags">
-            <span>⚡ Fast</span>
-            <span>🔒 Private</span>
-            <span>🧠 AI Powered</span>
-          </div>
-        </div>
-
-        <img src="/bg.jpg" />
+        <button onClick={handleUpload}>Upload & Analyze</button>
       </section>
 
-      {/* UPLOAD SECTION */}
-      <section id="upload" className="upload">
-        <h2>Upload your Report</h2>
-
-        <input
-          type="file"
-          accept=".pdf,.csv,.xlsx,.xls,.png,.jpg,.jpeg"
-          onChange={(e) => setFile(e.target.files[0])}
-        />
-
-        <button onClick={handleUpload}>Analyze</button>
-      </section>
-
-      {/* HOW IT WORKS */}
-      <section id="how" className="how">
-        <h2>How MediAI Works</h2>
-
-        <div className="grid">
-          <div className="card">
-            <h3>📄 Upload</h3>
-            <p>Upload your blood report</p>
-          </div>
-
-          <div className="card">
-            <h3>🤖 AI Analysis</h3>
-            <p>AI extracts medical data</p>
-          </div>
-
-          <div className="card">
-            <h3>📊 Risk Detection</h3>
-            <p>Detect abnormalities</p>
-          </div>
-
-          <div className="card">
-            <h3>✅ Results</h3>
-            <p>Clear insights & suggestions</p>
-          </div>
-        </div>
+      {/* HOW */}
+      <section id="how">
+        <h2>How it works</h2>
+        <p>Upload → AI Analysis → Health Insights</p>
       </section>
 
       {/* DASHBOARD */}
-      <section id="dashboard" className="dashboard">
+      <section id="dashboard">
         <h2>Dashboard</h2>
-
         <div className="stats">
-          <div>Total<br/><span>0</span></div>
-          <div>Normal<br/><span>0</span></div>
-          <div>Risk<br/><span>0</span></div>
-          <div>Critical<br/><span>0</span></div>
+          <div>Total<br/>0</div>
+          <div>Normal<br/>0</div>
+          <div>Risk<br/>0</div>
+          <div>Critical<br/>0</div>
         </div>
       </section>
 
-      {/* FEATURES */}
-      <section id="about" className="features">
-        <h2>Built for Smart Healthcare</h2>
-
-        <div className="grid">
-          <div className="card">🔐 Privacy First</div>
-          <div className="card">⚡ Fast Processing</div>
-          <div className="card">📊 Smart Insights</div>
-          <div className="card">🧠 AI Powered</div>
-        </div>
+      {/* ABOUT */}
+      <section id="about">
+        <h2>About</h2>
+        <p>MediAI helps analyze medical reports using AI.</p>
       </section>
 
-      {/* LOGIN */}
-      <section className="login">
-        <h2>Welcome Back</h2>
-        <input placeholder="Username" />
-        <input placeholder="Password" type="password" />
-        <button>Login</button>
-      </section>
-
-      {/* STYLES */}
       <style jsx>{`
-        .main {
-          background: #0b1c2c;
+        html {
+          scroll-behavior: smooth;
+        }
+
+        .container {
+          background: url("/bg.jpg") no-repeat center center/cover;
+          min-height: 100vh;
           color: white;
           font-family: Arial;
         }
 
-        .nav {
+        nav {
           display: flex;
           justify-content: space-between;
           padding: 20px;
-          background: #071521;
+          background: rgba(0,0,0,0.6);
         }
 
-        .nav a {
+        nav a {
           margin: 0 10px;
           color: white;
           text-decoration: none;
         }
 
-        .hero {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 60px;
-        }
-
-        .hero img {
-          width: 300px;
-          border-radius: 20px;
-        }
-
-        .primary {
-          margin-top: 20px;
-          padding: 12px 25px;
-          background: #00c6ff;
-          border: none;
-          border-radius: 10px;
-        }
-
-        .tags span {
-          margin-right: 10px;
-          background: rgba(255,255,255,0.1);
-          padding: 5px 10px;
-          border-radius: 10px;
-        }
-
         section {
-          padding: 60px 20px;
+          padding: 80px 20px;
           text-align: center;
         }
 
-        .grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-          gap: 20px;
+        .hero {
+          height: 100vh;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
         }
 
-        .card {
-          background: rgba(255,255,255,0.05);
-          padding: 20px;
-          border-radius: 15px;
+        input {
+          margin: 10px;
+          padding: 10px;
+        }
+
+        button {
+          padding: 12px 25px;
+          background: #00c6ff;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
         }
 
         .stats {
@@ -208,21 +133,9 @@ export default function Home() {
         }
 
         .stats div {
-          background: rgba(255,255,255,0.1);
+          background: rgba(0,0,0,0.5);
           padding: 20px;
           border-radius: 10px;
-        }
-
-        input {
-          display: block;
-          margin: 10px auto;
-          padding: 10px;
-          border-radius: 8px;
-          border: none;
-        }
-
-        button {
-          cursor: pointer;
         }
       `}</style>
     </div>
